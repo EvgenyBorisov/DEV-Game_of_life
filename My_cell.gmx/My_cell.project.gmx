@@ -8,8 +8,14 @@
   <sprites name="sprites">
     <sprite>sprites\spr_Display</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\background0_BG</background>
+  </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\rule_life.gml</script>
+    <script>scripts\rule_basic.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\display</object>
   </objects>

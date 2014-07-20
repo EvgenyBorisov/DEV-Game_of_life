@@ -25,9 +25,97 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Создание карты.
+            <string>zoomed=false
+zone=false
+// Создание карты.
 for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
     map[ix,iy]=0;
+    temp_map[ix,iy]=0;
+}
+zx1=0
+zx2=0
+zy1=0
+zy2=0
+show_message_async("Script: game of life.
+Draw something.
+Press space to next frame. ")
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="5" enumb="32">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>rule_life(200,200)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="8">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if zone =true {
+zone=false
+zx2=mouse_x
+zy2=mouse_y
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if zone =false {
+zone=true
+zx1=mouse_x
+zy1=mouse_y
 }
 </string>
           </argument>
@@ -77,10 +165,8 @@ for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
             <string>
 var ix,iy,tx,ty;
 
-//Рисование рамки
+
 draw_set_colour(c_white)
-draw_set_alpha(1)
-draw_line(x+601,y,x+601,y+600)
 
 
 for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
