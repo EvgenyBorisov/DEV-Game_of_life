@@ -8,6 +8,55 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Создание карты.
+for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
+    map[ix,iy]=0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>map[floor((mouse_x-x)/3),floor((mouse_y-y)/3)]=1
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -25,12 +74,55 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//Рисование рамки
+            <string>
+var ix,iy,tx,ty;
+
+//Рисование рамки
 draw_set_colour(c_white)
-draw_line(x-1,y-1,x+257,y-1)
-draw_line(x-1,y-1,x-1,y+257)
-draw_line(x+257,y-1,x+257,y+257)
-draw_line(x-1,y+257,x+257,y+257)
+draw_set_alpha(1)
+draw_line(x+601,y,x+601,y+600)
+
+
+for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
+    draw_set_alpha(map[ix,iy])
+    tx=(x+ix)*3;
+    ty=(y+iy)*3;
+    draw_rectangle(tx,ty,tx+2,ty+2,0)
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="81">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>map [3,3]=1
+map [4,4]=1 
+map [5,5]=1 
+map [6,6]=1 
+map [3,5]=1 
+map [3,7]=1 
+map [4,6]=1 
+map [4,8]=1 
+map [5,3]=1 
+map [5,5]=1 
+ 
 </string>
           </argument>
         </arguments>
