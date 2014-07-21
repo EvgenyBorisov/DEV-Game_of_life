@@ -32,13 +32,26 @@ for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
     map[ix,iy]=0;
     temp_map[ix,iy]=0;
 }
+height=sprite_get_height(image_index)
+width=sprite_get_width(image_index)
 zx1=0
 zx2=0
 zy1=0
 zy2=0
+
+fx=0
+fy=0
+fw=0
+fh=0
+fcx=0
+fcy=0
+fcw=0
+fch=0
 show_message_async("Script: game of life.
 Draw something.
 Press space to next frame. ")
+k=0
+
 </string>
           </argument>
         </arguments>
@@ -67,7 +80,7 @@ Press space to next frame. ")
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="8">
+    <event eventtype="6" enumb="57">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -85,9 +98,35 @@ Press space to next frame. ")
           <argument>
             <kind>1</kind>
             <string>if zone =true {
+var tr;
 zone=false
-zx2=mouse_x
-zy2=mouse_y
+zx1=floor(zx1/3)
+zy1=floor(zy1/3)
+zx2=floor(min(mouse_x,width)/3)
+zy2=floor(mouse_y/3)
+fcw=max(abs(zx1-zx2),3)
+fch=max(abs(zy1-zy2),3)
+
+zx1=min(zx1,zx2)
+zy1=min(zy1,zy2)
+k=0
+tr=5
+//zw=zw*3
+//zh=zh*3
+while tr&lt;600 {
+k++;
+tr+=max(fcw*3,fch*3);
+}
+k=clamp(k-1,1,10)
+
+fx=300-fcw*3*k/2
+fy=300-fch*3*k/2
+fw=fcw*k*3
+fh=fch*k*3
+fcx=zx1;
+fcy=zy1;
+zoomed=true
+
 }
 
 </string>
@@ -112,10 +151,10 @@ zy2=mouse_y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if zone =false {
+            <string>if zone =false and zoomed=false  {
 zone=true
-zx1=mouse_x
-zy1=mouse_y
+zx1=floor(mouse_x/3)*3
+zy1=floor(mouse_y/3)*3
 }
 </string>
           </argument>
@@ -139,7 +178,20 @@ zy1=mouse_y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>map[floor((mouse_x-x)/3),floor((mouse_y-y)/3)]=1
+            <string>if  zoomed 
+{
+ var clx,cly;
+ clx=floor((mouse_x-fx)/(3*k))
+ cly=floor((mouse_y-fy)/(3*k))
+ if clx==clamp(clx,0,fcw-1) and cly==clamp(cly,0,fch-1){
+ map[fcx+clx,fcy+cly]=1
+ }
+} 
+else
+{
+ map[floor((mouse_x)/3),floor((mouse_y)/3)]=1
+} 
+
 </string>
           </argument>
         </arguments>
@@ -162,8 +214,7 @@ zy1=mouse_y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-var ix,iy,tx,ty;
+            <string>var ix,iy,tx,ty;
 
 
 draw_set_colour(c_white)
@@ -171,11 +222,42 @@ draw_set_colour(c_white)
 
 for (ix=0;ix&lt;200;ix++) for (iy=0; iy&lt;200;iy++){
     draw_set_alpha(map[ix,iy])
-    tx=(x+ix)*3;
-    ty=(y+iy)*3;
+    tx=(ix)*3;
+    ty=(iy)*3;
     draw_rectangle(tx,ty,tx+2,ty+2,0)
 }
 
+if zone{
+tx=min(mouse_x,width)
+draw_set_colour(c_green)
+draw_set_alpha(1)
+//draw_line(zx1,zy1,zx1,mouse_y)
+//draw_line(zx1,zy1,tx,zy1)
+//draw_line(tx,zy1,tx,mouse_y)
+//draw_line(zx1,mouse_y,tx,mouse_y)
+draw_rectangle(zx1,zy1,floor(mouse_x/3)*3,floor(mouse_y/3)*3,1)
+}
+
+if zoomed {
+   draw_set_alpha(1)
+   draw_set_colour(c_app)
+   draw_rectangle(fx-2,fy-2,fx+fw+2,fy+fh+2,0)
+   draw_set_colour(c_black)
+   draw_rectangle(fx,fy,fx+fw,fy+fh,0)
+   draw_set_colour(c_white)
+   draw_rectangle(fx,fy,fx+fw,fy+fh,1)
+   draw_set_colour(c_aqua)
+   draw_set_alpha(0.3)
+   draw_grid(fx-1,fy-1,fw,fh,k*3)
+   draw_set_alpha(1)
+   for (ix=fcx;ix&lt;fcx+fcw;ix++) for (iy=fcy; iy&lt;fcy+fch;iy++){
+       draw_set_alpha(map[ix,iy])
+       draw_set_colour(c_white)
+       tx=fx+(ix-fcx)*k*3;
+       ty=fy+(iy-fcy)*k*3;
+       draw_rectangle(tx,ty,tx+k*3-1,ty+k*3-1,0)
+   }
+}
 </string>
           </argument>
         </arguments>
@@ -209,6 +291,29 @@ map [4,8]=1
 map [5,3]=1 
 map [5,5]=1 
  
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="27">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>zoomed=false
 </string>
           </argument>
         </arguments>

@@ -15,14 +15,17 @@
   <scripts name="scripts">
     <script>scripts\rule_life.gml</script>
     <script>scripts\rule_basic.gml</script>
+    <script>scripts\draw_grid.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\display</object>
   </objects>
-  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\room0</room>
   </rooms>
+  <constants number="1">
+    <constant name="c_app">make_colour_rgb(0,148,255)</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
