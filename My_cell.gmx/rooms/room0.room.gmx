@@ -3,8 +3,8 @@
   <caption></caption>
   <width>800</width>
   <height>600</height>
-  <vsnap>32</vsnap>
-  <hsnap>32</hsnap>
+  <vsnap>16</vsnap>
+  <hsnap>16</hsnap>
   <isometric>0</isometric>
   <speed>30</speed>
   <persistent>0</persistent>
@@ -52,6 +52,15 @@
   </views>
   <instances>
     <instance objName="display" x="0" y="0" name="inst_9A9FF6FB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_random" x="720" y="48" name="inst_3F63F1ED" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_clear" x="720" y="32" name="inst_63195BCC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_step" x="688" y="32" name="inst_EC4CAEB5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_start" x="624" y="32" name="inst_900E85F3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="box" x="624" y="128" name="inst_B2B86314" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_fields" x="720" y="80" name="inst_5E5D1C26" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_main" x="624" y="80" name="inst_C805C3CE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_colors" x="624" y="96" name="inst_307260CA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="but_figures" x="688" y="80" name="inst_A0E3ED12" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

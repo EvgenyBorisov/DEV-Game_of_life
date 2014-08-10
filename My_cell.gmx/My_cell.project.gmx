@@ -7,6 +7,19 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\spr_Display</sprite>
+    <sprite>sprites\sprite1_button_step</sprite>
+    <sprite>sprites\spr_but_start</sprite>
+    <sprite>sprites\spr_but_stop</sprite>
+    <sprite>sprites\spr_but_random</sprite>
+    <sprite>sprites\spr_but_clear</sprite>
+    <sprite>sprites\spr_colorbox</sprite>
+    <sprite>sprites\spr_but_empty64</sprite>
+    <sprite>sprites\spr_but_empty16</sprite>
+    <sprite>sprites\spr_but_empty32</sprite>
+    <sprite>sprites\spr_but_figures</sprite>
+    <sprite>sprites\spr_but_colors</sprite>
+    <sprite>sprites\spr_but_main</sprite>
+    <sprite>sprites\spr_but_fields</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0_BG</background>
@@ -14,17 +27,40 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\rule_life.gml</script>
+    <script>scripts\rule_random.gml</script>
+    <script>scripts\rule_wave.gml</script>
     <script>scripts\rule_basic.gml</script>
     <script>scripts\draw_grid.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\font0</font>
+  </fonts>
   <objects name="objects">
     <object>objects\display</object>
+    <object>objects\par_button</object>
+    <object>objects\par_button_box</object>
+    <object>objects\but_step</object>
+    <object>objects\but_start</object>
+    <object>objects\but_random</object>
+    <object>objects\but_clear</object>
+    <object>objects\box</object>
+    <object>objects\but_empty32</object>
+    <object>objects\but_empty16</object>
+    <object>objects\but_empty64</object>
+    <object>objects\but_figures</object>
+    <object>objects\but_colors</object>
+    <object>objects\but_main</object>
+    <object>objects\but_fields</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
   </rooms>
-  <constants number="1">
+  <constants number="5">
+    <constant name="PAGE_MAIN">0</constant>
     <constant name="c_app">make_colour_rgb(0,148,255)</constant>
+    <constant name="PAGE_COLORS">1</constant>
+    <constant name="PAGE_FIGURES">2</constant>
+    <constant name="PAGE_FIELDS">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
