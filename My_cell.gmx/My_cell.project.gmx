@@ -30,6 +30,10 @@
     <script>scripts\rule_random.gml</script>
     <script>scripts\rule_wave.gml</script>
     <script>scripts\rule_basic.gml</script>
+    <script>scripts\rule_landgen.gml</script>
+    <script>scripts\rule_landgen_random.gml</script>
+    <script>scripts\rule_landsmoth.gml</script>
+    <script>scripts\land_median.gml</script>
     <script>scripts\draw_grid.gml</script>
   </scripts>
   <fonts name="fonts">
@@ -55,12 +59,14 @@
   <rooms name="rooms">
     <room>rooms\room0</room>
   </rooms>
-  <constants number="5">
+  <constants number="7">
     <constant name="PAGE_MAIN">0</constant>
     <constant name="c_app">make_colour_rgb(0,148,255)</constant>
     <constant name="PAGE_COLORS">1</constant>
     <constant name="PAGE_FIGURES">2</constant>
     <constant name="PAGE_FIELDS">3</constant>
+    <constant name="GM_build_date">41867.8260099653</constant>
+    <constant name="GM_version">'1.0.0.0'</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
