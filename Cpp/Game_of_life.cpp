@@ -4,6 +4,11 @@
 
 #define W 100
 void pointer(int x, int y,int col){
+     setcolor(col);
+     
+     rectangle(x,y,x+2,y+2);
+     putpixel(x+1,y+1,col);
+     /*
      putpixel(x,y,col);
      putpixel(x+1,y,col);
      putpixel(x+2,y,col);
@@ -12,7 +17,7 @@ void pointer(int x, int y,int col){
      putpixel(x+2,y+1,col);
      putpixel(x,y+2,col);
      putpixel(x+1,y+2,col);
-     putpixel(x+2,y+2,col);
+     putpixel(x+2,y+2,col);*/
 }     
 
 int main()  {
@@ -34,7 +39,7 @@ int main()  {
       //clearviewport();
       
 
-      for (int ix=1;ix<W-1;ix++) for (int iy=1; iy<W-1;iy++){  
+      for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){  
       	int m = field[ix-1][iy-1]+field[ix][iy-1]+field[ix+1][iy-1]+field[ix-1][iy]+field[ix+1][iy]+field[ix-1][iy+1]+field[ix][iy+1]+field[ix+1][iy+1];
       	
         if (field[ix][iy]==0){
@@ -46,30 +51,6 @@ int main()  {
        
       }
       
-      /*for (int ix=1;ix<29;ix++){
-        for (int iy=1;iy<29;iy++){
-          int s;
-          s=field[ix-1][iy-1]+field[ix][iy-1]+field[ix+1][iy-1]+field[ix+1][iy]+field[ix+1][iy+1]+field[ix][iy+1]+field[ix-1][iy+1]+field[ix-1][iy];
-          if (field[ix][iy]==0){
-            if (s==3){field2[ix][iy]=1;}
-              else {field2[ix][iy]=0;}
-          }
-          else{
-            if ((s==3) || (s==2)){
-              field2[ix][iy]=1;
-            }
-            else {
-              field2[ix][iy]=0;
-            }
-          }
-          for (int ix=0;ix<30;ix++){
-            for (int iy=0;iy<30;iy++){
-              field[ix][iy]=field2[ix][iy];
-            }
-          }
-         
-        }delay(100);
-      }*/
       for (int ix=0;ix<W;ix++){
         for (int iy=0;iy<W;iy++){
           if (field[ix][iy] != field2[ix][iy]){
@@ -83,11 +64,11 @@ int main()  {
           } 
         }
       }
-      for (int ix=1;ix<W-1;ix++) for (int iy=1; iy<W-1;iy++){
+      for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
 		field[ix][iy]=field2[ix][iy];
 		//field2[ix][iy]=0;
 		}
-    //delay(1);
+    delay(1);
     }
 
     getch();
