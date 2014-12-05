@@ -1,7 +1,3 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2013)
-and may not be redistributed without written permission.*/
-
-//Using SDL, SDL_image, standard IO, math, and strings
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
@@ -16,23 +12,17 @@ and may not be redistributed without written permission.*/
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-//Starts up SDL and creates window
 bool init();
-
-//Loads media
 bool loadMedia();
-
-//Frees media and shuts down SDL
 void close();
-//void pointer(int x, int y, int col);
-//Loads individual image as texture
-SDL_Texture* loadTexture( std::string path );
+void pointer(int x, int y, int col);
+void game_init ();
+void game_step ();
+void game_draw ();
 
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
+SDL_Texture* loadTexture( std::string path );//Loads individual image as texture
+SDL_Window* gWindow = NULL;//The window we'll be rendering to
+SDL_Renderer* gRenderer = NULL; //The window renderer
 
 bool init()
 {
@@ -136,6 +126,7 @@ SDL_Texture* loadTexture( std::string path )
 
 	return newTexture;
 }
+
 void pointer (int x, int y, int col) {
     SDL_Rect fillRect = { x ,y,3,3};
     if (col == 1){
@@ -148,18 +139,11 @@ void pointer (int x, int y, int col) {
 }
 
 
+
+
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
-	int field[W][W]={0};
-    int field2[W][W]={0};
-
-    for (int ix=0;ix<W;ix++){
-      for (int iy=0;iy<W;iy++){
-        field[ix][iy]=rand()%2*rand()%2;
-      }
-    }
-
 	if( !init() )
 	{
 		printf( "Failed to initialize!\n" );
@@ -173,6 +157,16 @@ int main( int argc, char* args[] )
 		}
 		else
 		{
+			int field[W][W]={0};
+   			int field2[W][W]={0};
+   			for (int ix=0;ix<W;ix++){
+      			for (int iy=0;iy<W;iy++){
+        		field[ix][iy]=rand()%2*rand()%2;
+      			}
+    		}
+
+
+
 			//Main loop flag
 			bool quit = false;
 
@@ -191,6 +185,7 @@ int main( int argc, char* args[] )
 						quit = true;
 					}
 				}
+				
 
 				for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
       				int m = field[ix-1][iy-1]+field[ix][iy-1]+field[ix+1][iy-1]+field[ix-1][iy]+field[ix+1][iy]+field[ix-1][iy+1]+field[ix][iy+1]+field[ix+1][iy+1];
@@ -207,47 +202,20 @@ int main( int argc, char* args[] )
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
 
-				/*
-				//Render red filled quad
-				SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH/2, SCREEN_HEIGHT/2};
-				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
-				SDL_RenderFillRect( gRenderer, &fillRect );
-
-				//Render green outlined quad
-				SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
-				SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0x00, 0xFF );
-				SDL_RenderDrawRect( gRenderer, &outlineRect );
-
-				//Draw blue horizontal line
-				SDL_SetRenderDrawColor( gRenderer, 0x00, 0x00, 0xFF, 0xFF );
-				SDL_RenderDrawLine( gRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2 );
-
-				//Draw vertical line of yellow dots
-				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );
-				for( int i = 0; i < SCREEN_HEIGHT; i += 4 )
-				{
-					SDL_RenderDrawPoint( gRenderer, SCREEN_WIDTH / 2, i );
-				}*/
 				for (int ix=0;ix<W;ix++){
         			for (int iy=0;iy<W;iy++){
                             pointer(ix*3,iy*3,field2[ix][iy]);
-          				/*if (field[ix][iy] != field2[ix][iy]){
-          					if (field2[ix][iy]==0){
-            					pointer(ix*3,iy*3,0);
-            				}
-          					else{
-            					pointer(ix*3,iy*3,1);
-          					}
-          				}*/
         			}
       			}
 
-				//Update screen
-				SDL_RenderPresent( gRenderer );
-				for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
+      			for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
 					field[ix][iy]=field2[ix][iy];
 					//field2[ix][iy]=0;
 				}
+
+				//Update screen
+				SDL_RenderPresent( gRenderer );
+				
 				//Sleep(1)
 			}
 		}
