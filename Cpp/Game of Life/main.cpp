@@ -11,13 +11,21 @@
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-
+struct col {
+	unsigned short R;
+	unsigned short G;
+	unsigned short B;
+	unsigned short A;
+}; 
 struct point
 {
-	int x;
-	int y;
-	int col;
+	int allive;
+	col color;
 };
+
+
+col c_black {0,0,0,0};
+col c_white {255,255,255,255};
 
 bool init();
 bool loadMedia();
@@ -137,10 +145,10 @@ SDL_Texture* loadTexture( std::string path )
 void pointer (int x, int y, int col) {
     SDL_Rect fillRect = { x ,y,3,3};
     if (col == 1){
-            SDL_SetRenderDrawColor( gRenderer, 255, 255, 255, 255 );
+            SDL_SetRenderDrawColor( gRenderer, 100, 100, 255, 255 );
     }
     else{
-        SDL_SetRenderDrawColor( gRenderer, 0, 0, 0, 0 );
+        SDL_SetRenderDrawColor( gRenderer, 0,0,0,0 );
     }
     SDL_RenderFillRect( gRenderer, &fillRect );
 }
