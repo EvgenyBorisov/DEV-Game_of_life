@@ -170,6 +170,7 @@ int main( int argc, char* args[] )
 		}
 		else
 		{
+			srand(time(NULL));
 			point field[W][W]={0};
    			point field2[W][W]={0};
    			for (int ix=0;ix<W;ix++){
@@ -180,7 +181,7 @@ int main( int argc, char* args[] )
       			}
     		}
 
-
+    		bool pause=0;
 
 			//Main loop flag
 			bool quit = false;
@@ -218,17 +219,31 @@ int main( int argc, char* args[] )
 
 							case SDLK_r:
 							std::cout << "Ranomized\n";
+							srand(time(NULL));
 							for (int ix=0;ix<W;ix++){
       						for (int iy=0;iy<W;iy++){
 				        		field2[ix][iy].allive = rand()%2*rand()%2;
 				        		//field[ix][iy].allive = rand()%2*rand()%2;
 				        		field[ix][iy].color = c_black;
 				        		field2[ix][iy].color = c_black;
+				        		if (pause) {
+				        			if (field2[ix][iy].allive) {
+				        				field2[ix][iy].color = c_white;
+				        				//field[ix][iy].color = c_white;
+				        			}
+				        		}
 				      			}
 				    		}
 							break;
 
-							case SDLK_LEFT:
+							case SDLK_p:
+							pause = !pause;
+							if (pause == 0){
+								std::cout << "Pause event released\n";
+							}
+							else{
+								std::cout << "Game paused\n";
+							}
 
 							break;
 
@@ -243,17 +258,18 @@ int main( int argc, char* args[] )
 					}
 				}
 
+				if (!pause){
+					for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
+	      				int m = field[ix-1][iy-1].allive+field[ix][iy-1].allive+field[ix+1][iy-1].allive+field[ix-1][iy].allive+field[ix+1][iy].allive+field[ix-1][iy+1].allive+field[ix][iy+1].allive+field[ix+1][iy+1].allive;
 
-				for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
-      				int m = field[ix-1][iy-1].allive+field[ix][iy-1].allive+field[ix+1][iy-1].allive+field[ix-1][iy].allive+field[ix+1][iy].allive+field[ix-1][iy+1].allive+field[ix][iy+1].allive+field[ix+1][iy+1].allive;
-
-        		if (field[ix][iy].allive==0){
-        		if (m==3) { field2[ix][iy].allive=1;
-        					field2[ix][iy].color=c_white;}
-      			}
-      			else{
-       			if  ((m==2) || (m==3)){field2[ix][iy].allive=1;field2[ix][iy].color=c_white;} else { field2[ix][iy].allive=0;field2[ix][iy].color=c_black;}
-      			}
+	        		if (field[ix][iy].allive==0){
+	        		if (m==3) { field2[ix][iy].allive=1;
+	        					field2[ix][iy].color=c_white;}
+	      			}
+	      			else{
+	       			if  ((m==2) || (m==3)){field2[ix][iy].allive=1;field2[ix][iy].color=c_white;} else { field2[ix][iy].allive=0;field2[ix][iy].color=c_black;}
+	      			}
+	      			}
       			}
 
 				//Clear screen
