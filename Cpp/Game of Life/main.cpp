@@ -142,14 +142,10 @@ SDL_Texture* loadTexture( std::string path )
 	return newTexture;
 }
 
-void pointer (int x, int y, int col) {
+void pointer (int x, int y, col color) {
     SDL_Rect fillRect = { x ,y,3,3};
-    if (col == 1){
-            SDL_SetRenderDrawColor( gRenderer, 100, 100, 255, 255 );
-    }
-    else{
-        SDL_SetRenderDrawColor( gRenderer, 0,0,0,0 );
-    }
+    
+    SDL_SetRenderDrawColor( gRenderer, color.R, color.G, color.B, color.A );
     SDL_RenderFillRect( gRenderer, &fillRect );
 }
 
@@ -172,11 +168,12 @@ int main( int argc, char* args[] )
 		}
 		else
 		{
-			int field[W][W]={0};
-   			int field2[W][W]={0};
+			point field[W][W]={0};
+   			point field2[W][W]={0};
    			for (int ix=0;ix<W;ix++){
       			for (int iy=0;iy<W;iy++){
-        		field[ix][iy]=rand()%2*rand()%2;
+        		field[ix][iy].allive = rand()%2*rand()%2;
+        		field[ix][iy].color = c_white;
       			}
     		}
 
@@ -203,13 +200,14 @@ int main( int argc, char* args[] )
 				
 
 				for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
-      				int m = field[ix-1][iy-1]+field[ix][iy-1]+field[ix+1][iy-1]+field[ix-1][iy]+field[ix+1][iy]+field[ix-1][iy+1]+field[ix][iy+1]+field[ix+1][iy+1];
+      				int m = field[ix-1][iy-1].allive+field[ix][iy-1].allive+field[ix+1][iy-1].allive+field[ix-1][iy].allive+field[ix+1][iy].allive+field[ix-1][iy+1].allive+field[ix][iy+1].allive+field[ix+1][iy+1].allive;
 
-        		if (field[ix][iy]==0){
-        		if (m==3) { field2[ix][iy]=1;}
+        		if (field[ix][iy].allive==0){
+        		if (m==3) { field2[ix][iy].allive=1;
+        					field2[ix][iy].color=c_white;}
       			}
       			else{
-       			if  ((m==2) || (m==3)){field2[ix][iy]=1;} else { field2[ix][iy]=0;}
+       			if  ((m==2) || (m==3)){field2[ix][iy].allive=1;field2[ix][iy].color=c_white;} else { field2[ix][iy].allive=0;field2[ix][iy].color=c_black;}
       			}
       			}
 
@@ -219,12 +217,13 @@ int main( int argc, char* args[] )
 
 				for (int ix=0;ix<W;ix++){
         			for (int iy=0;iy<W;iy++){
-                            pointer(ix*3,iy*3,field2[ix][iy]);
+                            pointer(ix*3,iy*3,field2[ix][iy].color);
         			}
       			}
 
       			for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
-					field[ix][iy]=field2[ix][iy];
+					field[ix][iy].allive=field2[ix][iy].allive;
+					field[ix][iy].color=field2[ix][iy].color;
 					//field2[ix][iy]=0;
 				}
 
