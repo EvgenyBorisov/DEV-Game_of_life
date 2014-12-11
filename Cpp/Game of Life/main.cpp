@@ -205,7 +205,7 @@ int main( int argc, char* args[] )
 						switch( e.key.keysym.sym )
 						{
 							case SDLK_c:
-							std::cout << "Cleared";
+							std::cout << "Cleared\n";
 							for (int ix=0;ix<W;ix++){
       						for (int iy=0;iy<W;iy++){
 				        		field2[ix][iy].allive = 0;
@@ -216,8 +216,16 @@ int main( int argc, char* args[] )
 				    		}
 							break;
 
-							case SDLK_DOWN:
-
+							case SDLK_r:
+							std::cout << "Ranomized\n";
+							for (int ix=0;ix<W;ix++){
+      						for (int iy=0;iy<W;iy++){
+				        		field2[ix][iy].allive = rand()%2*rand()%2;
+				        		//field[ix][iy].allive = rand()%2*rand()%2;
+				        		field[ix][iy].color = c_black;
+				        		field2[ix][iy].color = c_black;
+				      			}
+				    		}
 							break;
 
 							case SDLK_LEFT:
