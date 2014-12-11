@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include "iostream"
 #include <stdio.h>
 #include <string>
 #include <cmath>
@@ -11,12 +12,14 @@
 //Screen dimension constants
 const int SCREEN_WIDTH = 480;
 const int SCREEN_HEIGHT = 480;
+
 struct col {
 	unsigned short R;
 	unsigned short G;
 	unsigned short B;
 	unsigned short A;
-}; 
+};
+
 struct point
 {
 	int allive;
@@ -24,13 +27,13 @@ struct point
 };
 
 
-col c_black {0,0,0,0};
-col c_white {255,255,255,255};
+col c_black {200,200,255,255};
+col c_white {100,100,255,255};
 
 bool init();
 bool loadMedia();
 void close();
-void pointer(int x, int y, int col);
+void pointer(int x, int y, col color);
 void game_init ();
 void game_step ();
 void game_draw ();
@@ -144,7 +147,6 @@ SDL_Texture* loadTexture( std::string path )
 
 void pointer (int x, int y, col color) {
     SDL_Rect fillRect = { x ,y,3,3};
-    
     SDL_SetRenderDrawColor( gRenderer, color.R, color.G, color.B, color.A );
     SDL_RenderFillRect( gRenderer, &fillRect );
 }
@@ -173,7 +175,8 @@ int main( int argc, char* args[] )
    			for (int ix=0;ix<W;ix++){
       			for (int iy=0;iy<W;iy++){
         		field[ix][iy].allive = rand()%2*rand()%2;
-        		field[ix][iy].color = c_white;
+        		field[ix][iy].color = c_black;
+        		field2[ix][iy].color = c_black;
       			}
     		}
 
@@ -196,8 +199,42 @@ int main( int argc, char* args[] )
 					{
 						quit = true;
 					}
+					else if( e.type == SDL_KEYDOWN )
+					{
+						//Select surfaces based on key press
+						switch( e.key.keysym.sym )
+						{
+							case SDLK_c:
+							std::cout << "Cleared";
+							for (int ix=0;ix<W;ix++){
+      						for (int iy=0;iy<W;iy++){
+				        		field2[ix][iy].allive = 0;
+				        		field[ix][iy].allive = 0;//rand()%2*rand()%2;
+				        		field[ix][iy].color = c_black;
+				        		field2[ix][iy].color = c_black;
+				      			}
+				    		}
+							break;
+
+							case SDLK_DOWN:
+
+							break;
+
+							case SDLK_LEFT:
+
+							break;
+
+							case SDLK_RIGHT:
+
+							break;
+
+							default:
+
+							break;
+						}
+					}
 				}
-				
+
 
 				for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
       				int m = field[ix-1][iy-1].allive+field[ix][iy-1].allive+field[ix+1][iy-1].allive+field[ix-1][iy].allive+field[ix+1][iy].allive+field[ix-1][iy+1].allive+field[ix][iy+1].allive+field[ix+1][iy+1].allive;
@@ -212,9 +249,9 @@ int main( int argc, char* args[] )
       			}
 
 				//Clear screen
-				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+				SDL_SetRenderDrawColor( gRenderer, 255, 255, 255, 255 );
 				SDL_RenderClear( gRenderer );
-
+				//std::cout << field2[0][2].color.R;
 				for (int ix=0;ix<W;ix++){
         			for (int iy=0;iy<W;iy++){
                             pointer(ix*3,iy*3,field2[ix][iy].color);
@@ -229,7 +266,7 @@ int main( int argc, char* args[] )
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
-				
+
 				//Sleep(1)
 			}
 		}
