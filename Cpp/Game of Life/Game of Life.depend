@@ -329,7 +329,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1418292166 source:y:\git\my_cell\cpp\game of life\main.cpp
+1418293749 source:y:\git\my_cell\cpp\game of life\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	"iostream"

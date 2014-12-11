@@ -182,6 +182,9 @@ int main( int argc, char* args[] )
     		}
 
     		bool pause=0;
+    		bool drawing=0;
+    		int drx=0;
+    		int dry=0;
 
 			//Main loop flag
 			bool quit = false;
@@ -237,6 +240,7 @@ int main( int argc, char* args[] )
 							break;
 
 							case SDLK_p:
+							if (!drawing){
 							pause = !pause;
 							if (pause == 0){
 								std::cout << "Pause event released\n";
@@ -244,13 +248,37 @@ int main( int argc, char* args[] )
 							else{
 								std::cout << "Game paused\n";
 							}
+							}
+							else{
+								std::cout << "Drawing must be OFF\n";
+							}
 
 							break;
 
-							case SDLK_RIGHT:
+							case SDLK_d:
+							if (pause){
+							drawing = !drawing;
+							if (drawing == 0){
+								std::cout << "Drawing OFF\n";
+							}
+							else{
+								std::cout << "Drawing ON\n";
+							}
+							drx=80;
+							dry=80;
+							}
+							else{
+								std::cout << "Game must be paused\n";
+							}
 
 							break;
 
+							case SDLK_SPACE:
+							if (drawing){
+								field2[drx][dry].allive = 1;
+								field2[drx][dry].color = c_white;
+							}
+							break;
 							default:
 
 							break;
