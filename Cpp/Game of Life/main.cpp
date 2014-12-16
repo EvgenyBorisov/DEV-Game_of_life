@@ -28,7 +28,8 @@ struct point
 
 
 col c_black {200,200,255,255};
-col c_white {100,100,255,255};
+col c_white {50,50,255,255};
+col c_point {100,255,0,255};
 
 bool init();
 bool loadMedia();
@@ -264,8 +265,8 @@ int main( int argc, char* args[] )
 							else{
 								std::cout << "Drawing ON\n";
 							}
-							drx=80;
-							dry=80;
+							drx=W/2;
+							dry=W/2;
 							}
 							else{
 								std::cout << "Game must be paused\n";
@@ -278,6 +279,31 @@ int main( int argc, char* args[] )
 								field2[drx][dry].allive = 1;
 								field2[drx][dry].color = c_white;
 							}
+							break;
+
+							case SDLK_RIGHT:
+								drx++;
+								if (drx >= W){
+									drx=0;
+								}
+							break;
+							case SDLK_LEFT:
+							drx--;
+								if (drx < 0){
+									drx=W-1;
+								}
+							break;
+							case SDLK_UP:
+							dry--;
+								if (dry < 0){
+									dry=W-1;
+								}
+							break;
+							case SDLK_DOWN:
+							dry++;
+								if (dry >= W){
+									dry=0;
+								}
 							break;
 							default:
 
@@ -313,9 +339,15 @@ int main( int argc, char* args[] )
       			for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
 					field[ix][iy].allive=field2[ix][iy].allive;
 					field[ix][iy].color=field2[ix][iy].color;
-					//field2[ix][iy]=0;
+					//field2[ix][iy].allive=0;
 				}
+				//Draw vertical line of yellow dots
+                SDL_SetRenderDrawColor( gRenderer, c_point.R, c_point.G, c_point.B, c_point.A );
 
+                SDL_RenderDrawPoint( gRenderer, drx*3, dry*3 );
+                SDL_RenderDrawPoint( gRenderer, drx*3+2, dry*3 );
+                SDL_RenderDrawPoint( gRenderer, drx*3+2, dry*3+2 );
+                SDL_RenderDrawPoint( gRenderer, drx*3, dry*3+2 );
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 
