@@ -14,10 +14,10 @@ const int SCREEN_WIDTH = 480;
 const int SCREEN_HEIGHT = 480;
 
 struct col {
-	unsigned short R;
-	unsigned short G;
-	unsigned short B;
-	unsigned short A;
+	Uint8 R;
+	Uint8 G;
+	Uint8 B;
+	Uint8 A;
 };
 
 struct point
@@ -25,7 +25,11 @@ struct point
 	int allive;
 	col color;
 };
-
+int get_i(int x){
+	if (x==-1) {x = W-1;}
+	if (x==W) {x = 0;}
+	return x;
+}
 
 col c_black {200,200,255,255};
 col c_white {50,50,255,255};
@@ -35,9 +39,6 @@ bool init();
 bool loadMedia();
 void close();
 void pointer(int x, int y, col color);
-void game_init ();
-void game_step ();
-void game_draw ();
 
 SDL_Texture* loadTexture( std::string path );//Loads individual image as texture
 SDL_Window* gWindow = NULL;//The window we'll be rendering to
@@ -63,7 +64,7 @@ bool init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "Game oF Life By Q33", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -182,6 +183,7 @@ int main( int argc, char* args[] )
       			}
     		}
 
+
     		bool pause=0;
     		bool drawing=0;
     		int drx=0;
@@ -207,6 +209,14 @@ int main( int argc, char* args[] )
 					else if( e.type == SDL_KEYDOWN )
 					{
 						//Select surfaces based on key press
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////	////	////			////
+////////////	//	  //////	////////////
+////////////        ////////		////////
+////////////	/	////////	////////////
+////////////    //    //////			////
+////////////////////////////////////////////				
 						switch( e.key.keysym.sym )
 						{
 							case SDLK_c:
@@ -248,6 +258,8 @@ int main( int argc, char* args[] )
 							}
 							else{
 								std::cout << "Game paused\n";
+								drx=W/2;
+								dry=W/2;
 							}
 							}
 							else{
@@ -256,7 +268,7 @@ int main( int argc, char* args[] )
 
 							break;
 
-							case SDLK_d:
+							/*case SDLK_d:
 							if (pause){
 							drawing = !drawing;
 							if (drawing == 0){
@@ -272,12 +284,19 @@ int main( int argc, char* args[] )
 								std::cout << "Game must be paused\n";
 							}
 
-							break;
+							break;*/
 
 							case SDLK_SPACE:
-							if (drawing){
+							if (pause){
 								field2[drx][dry].allive = 1;
 								field2[drx][dry].color = c_white;
+							}
+							break;
+
+							case SDLK_z:
+							if (pause){
+								field2[drx][dry].allive = 0;
+								field2[drx][dry].color = c_black;
 							}
 							break;
 
@@ -314,7 +333,7 @@ int main( int argc, char* args[] )
 
 				if (!pause){
 					for (int ix=0;ix<W;ix++) for (int iy=0; iy<W;iy++){
-	      				int m = field[ix-1][iy-1].allive+field[ix][iy-1].allive+field[ix+1][iy-1].allive+field[ix-1][iy].allive+field[ix+1][iy].allive+field[ix-1][iy+1].allive+field[ix][iy+1].allive+field[ix+1][iy+1].allive;
+	      				int m = field[get_i(ix-1)][get_i(iy-1)].allive+field[ix][get_i(iy-1)].allive+field[get_i(ix+1)][get_i(iy-1)].allive+field[get_i(ix-1)][iy].allive+field[get_i(ix+1)][iy].allive+field[get_i(ix-1)][get_i(iy+1)].allive+field[ix][get_i(iy+1)].allive+field[get_i(ix+1)][get_i(iy+1)].allive;
 
 	        		if (field[ix][iy].allive==0){
 	        		if (m==3) { field2[ix][iy].allive=1;
@@ -344,10 +363,12 @@ int main( int argc, char* args[] )
 				//Draw vertical line of yellow dots
                 SDL_SetRenderDrawColor( gRenderer, c_point.R, c_point.G, c_point.B, c_point.A );
 
+                if (pause){
                 SDL_RenderDrawPoint( gRenderer, drx*3, dry*3 );
                 SDL_RenderDrawPoint( gRenderer, drx*3+2, dry*3 );
                 SDL_RenderDrawPoint( gRenderer, drx*3+2, dry*3+2 );
                 SDL_RenderDrawPoint( gRenderer, drx*3, dry*3+2 );
+            	}
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 
